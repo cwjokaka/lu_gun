@@ -31,6 +31,7 @@ var GameInfoUI=(function(_super){
 		    this.levelLabel=null;
 		    this.scoreLabel=null;
 		    this.infoLabel=null;
+		    this.boom=null;
 
 			GameInfoUI.__super.call(this);
 		}
@@ -44,7 +45,7 @@ var GameInfoUI=(function(_super){
 
 		}
 
-		GameInfoUI.uiView={"type":"View","props":{"width":400,"height":825},"child":[{"type":"Button","props":{"y":23,"x":324,"var":"pauseBtn","stateNum":1,"skin":"resource/btn_pause.png"}},{"type":"Label","props":{"y":29,"x":14,"width":78,"var":"hpLabel","text":"HP:10","height":24,"fontSize":22,"color":"#22e82a","align":"center"}},{"type":"Label","props":{"y":27,"x":104,"width":80,"var":"levelLabel","text":"level:1","height":24,"fontSize":22,"color":"#0833dd","align":"center"}},{"type":"Label","props":{"y":28,"x":200,"wordWrap":true,"width":111,"var":"scoreLabel","text":"score:1","height":24,"fontSize":22,"color":"#eabe0f","align":"center"}},{"type":"Label","props":{"y":341,"x":-4,"wordWrap":true,"width":399,"var":"infoLabel","height":84,"fontSize":24,"color":"#72757d","align":"center"}}]};
+		GameInfoUI.uiView={"type":"View","props":{"width":400,"height":825},"child":[{"type":"Button","props":{"y":23,"x":324,"var":"pauseBtn","stateNum":1,"skin":"resource/btn_pause.png"}},{"type":"Label","props":{"y":29,"x":14,"width":78,"var":"hpLabel","text":"HP:10","height":24,"fontSize":22,"color":"#22e82a","align":"center"}},{"type":"Label","props":{"y":27,"x":104,"width":80,"var":"levelLabel","text":"level:1","height":24,"fontSize":22,"color":"#0833dd","align":"center"}},{"type":"Label","props":{"y":28,"x":200,"wordWrap":true,"width":111,"var":"scoreLabel","text":"score:1","height":24,"fontSize":22,"color":"#eabe0f","align":"center"}},{"type":"Label","props":{"y":341,"x":0,"wordWrap":true,"width":399,"var":"infoLabel","height":84,"fontSize":24,"color":"#72757d","align":"center"}},{"type":"Label","props":{"y":775,"x":-2,"width":57,"var":"boom","valign":"middle","text":"炸0","height":50,"fontSize":22,"color":"#0833dd","align":"center"}}]};
 		return GameInfoUI;
 	})(View);
 var HomePageUI=(function(_super){

@@ -4,6 +4,8 @@ var GameInfo = (function(_super){
         // var obj = Laya.stage.getChildByName('GameMain');
         //注册按钮点击事件，点击后暂停游戏
         this.pauseBtn.on(Laya.Event.CLICK, this, this.onPauseBtnClick);
+        //炸弹事件
+        this.boom.on(Laya.Event.CLICK, this, this.onBoom);
         //初始化UI 显示
         this.reset();
         this.gameMain = _gameMain;
@@ -20,6 +22,14 @@ var GameInfo = (function(_super){
     }
 
     //暂停按钮点击事件
+    _proto.onBoom = function(event){
+        //阻止事件往下传递
+        event.stopPropagation();
+        this.gameMain.boomAction();
+        Laya.stage.once(Laya.Event.CLICK, this, this.onStageClick);
+    }
+
+    //暂停按钮点击事件
     _proto.onPauseBtnClick = function(event){
         //阻止事件往下传递
         event.stopPropagation();
@@ -27,6 +37,7 @@ var GameInfo = (function(_super){
         this.gameMain.pause();
         Laya.stage.once(Laya.Event.CLICK, this, this.onStageClick);
     }
+
     //恢复游戏
     _proto.onStageClick = function(){
         this.infoLabel.text = "";
@@ -44,6 +55,10 @@ var GameInfo = (function(_super){
     //显示积分
     _proto.showScore = function(value){
         this.scoreLabel.text = "score:" + value;
+    }
+    //显示积分
+    _proto.showBoom = function(value){
+        this.boom.text = "炸" + value;
     }
     return GameInfo;
 })(ui.GameInfoUI);

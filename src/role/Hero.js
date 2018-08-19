@@ -3,6 +3,7 @@ var Hero = (function(_super){
         Hero.super(this);
         this.className = "Hero";
         this.bulletLevel = 1;
+        this.boomNum = 10;
     }
     Laya.class(Hero, "Hero", _super);
 

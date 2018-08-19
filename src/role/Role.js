@@ -19,7 +19,8 @@ var Role = (function(_super){
         this.speedY = _info.speed;
         this.speedX = 0;
         //被击半径
-        this.hitRadius = _info.hitRadius;
+        this.hitRadiusX = _info.hitRadius;
+        this.hitRadiusY = _info.hitRadius;
         //0:普通 1:子弹 2:炸药 3:补给品
         this.heroType = _info.heroType;
 

@@ -2,7 +2,7 @@
     "x":0,
     "type":"View",
     "selectedBox":1,
-    "selecteID":3,
+    "selecteID":9,
     "props":{"width":400,"sceneColor":"#000000","height":825},
     "nodeParent":-1,
     "label":"View",
@@ -67,13 +67,26 @@
         {
             "x":15,
             "type":"Label",
-            "props":{"y":341,"x":-4,"wordWrap":true,"width":399,"var":"infoLabel","styleSkin":"resource/label.png","height":84,"fontSize":24,"color":"#72757d","align":"center"},
+            "props":{"y":341,"x":0,"wordWrap":true,"width":399,"var":"infoLabel","styleSkin":"resource/label.png","height":84,"fontSize":24,"color":"#72757d","align":"center"},
             "nodeParent":1,
             "label":"Label(infoLabel)",
             "isDirectory":false,
             "isAniNode":true,
             "hasChild":false,
             "compId":7,
+            "child":[
+                ]
+        },
+        {
+            "x":15,
+            "type":"Label",
+            "props":{"y":775,"x":-2,"width":57,"var":"boom","valign":"middle","text":"炸0","styleSkin":"resource/label.png","height":50,"fontSize":22,"color":"#0833dd","align":"center"},
+            "nodeParent":1,
+            "label":"Label(boom)",
+            "isDirectory":false,
+            "isAniNode":true,
+            "hasChild":false,
+            "compId":9,
             "child":[
                 ]
         }],

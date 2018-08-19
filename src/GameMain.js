@@ -43,8 +43,12 @@ var index = 0;
             //子弹容器
             this.bulletsBox = new Sprite();
             Laya.stage.addChild(this.bulletsBox);
+            //奖励容器
             this.itemBox = new Sprite();
             Laya.stage.addChild(this.itemBox);
+            //炸弹容器
+            this.boomBox = new Sprite();
+            Laya.stage.addChild(this.boomBox);
             //创建UI界面
             this.gameInfo = new GameInfo(this);
             Laya.stage.addChild(this.gameInfo);
@@ -63,12 +67,17 @@ var index = 0;
             for(var j=0; j < this.bulletsBox.numChildren; j++){
                 var bullet = this.bulletsBox.getChildAt(j);
                 if(!bullet.visible || bullet.y < -20){
-                    //从舞台移除
-                    bullet.removeSelf();
-                    //回收前重置属性信息
-                    bullet.visible = true;
                     //回收对象
-                    Laya.Pool.recover("Bullet", bullet);
+                    if(bullet.className == "Bullet"){
+                        //从舞台移除
+                        bullet.removeSelf();
+                        //回收前重置属性信息
+                        bullet.visible = true;
+                        Laya.Pool.recover("Bullet", bullet);
+                    }else{
+                        bullet.destroy();
+                    }
+                    
                 }else{
                     bullet.move();
                 }
@@ -120,12 +129,12 @@ var index = 0;
                         for(var j = 0; j < this.bulletsBox.numChildren; j++){
                             var bullet = this.bulletsBox.getChildAt(j);
                             var hitRadius = role.hitRadius;
-                            if(hitRadius < 20){
-                                hitRadius = 20;
-                                if(this.level > 10){
-                                    hitRadius = 40;
-                                }
-                            }
+                            // if(hitRadius < 20){
+                            //     hitRadius = 20;
+                            //     if(this.level > 10){
+                            //         hitRadius = 40;
+                            //     }
+                            // }
                             if(Math.abs(role.x - bullet.x) < hitRadius && Math.abs(role.y - bullet.y) < hitRadius){
                                 role.hitAction(bullet.att);
                                 bullet.hitAction();
@@ -204,7 +213,8 @@ var index = 0;
 
             //显示
             this.gameInfo.showHp(this.hero.hp);
-             this.gameInfo.showScore(this.score);
+            this.gameInfo.showScore(this.score);
+            this.gameInfo.showBoom(this.hero.boomNum);
         }
 
         //  _proto.lostHp = function(role, lostHp){
@@ -252,6 +262,15 @@ var index = 0;
         //         }
         //     }
         // }
+
+        _proto.boomAction = function(){
+            if(this.hero.boomNum > 0){
+                this.hero.boomNum--;
+                var boom = new Boom();
+                boom.init({});
+                this.boomBox.addChild(boom);
+            }
+        }
 
          _proto.onMouseMove = function(){
             this.hero.pos(Laya.stage.mouseX, Laya.stage.mouseY);
