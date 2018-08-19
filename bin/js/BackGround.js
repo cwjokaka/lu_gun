@@ -18,7 +18,7 @@ var BackGround = (function (_super){
     Laya.class(BackGround, "BackGround", _super);
     var _proto = BackGround.prototype;
     _proto.onLoop = function(){
-        this.y += 5;
+        this.y += 10;
         if(this.bg1.y + this.y >= 852){
             this.bg1.y -= 852*2;
         }

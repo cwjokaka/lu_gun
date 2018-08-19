@@ -75,23 +75,23 @@ var index = 0;
             }
             //主角射击
             //获取当前时间
-            // var time = Laya.Browser.now();
-            // //如果当前时间大于下次设计时间
-            // if(time > this.hero.shootTime){
-            //     //更新下次射击时间
-            //     this.hero.shootTime = time + this.hero.shootInterval;
-            //     //创建新子弹
-            //     var bulletPos = this.bulletPos[this.hero.shootType - 1];
-            //     for(var k=0; k < bulletPos.length; k++){
-            //         var bullet = Laya.Pool.getItemByClass("Bullet", Bullet);
-            //         bullet.init({"type" : "bullet1", "camp" : 0, "speed" : -4-this.hero.shootType * 5, "hp" : 1, "hitRadius" : 1, "heroType": 1});
-            //         index++;
-            //         bullet.pos(this.hero.x + bulletPos[k], this.hero.y - this.hero.hitRadius -10);
-            //         this.bulletsBox.addChild(bullet);
-            //     }
-            //     Laya.SoundManager.playSound(MusicConf.HERO_SHOOT);
-            //     Laya.SoundManager.setSoundVolume(0.8, MusicConf.HERO_SHOOT);
-            // }
+            var time = Laya.Browser.now();
+            //如果当前时间大于下次设计时间
+            if(time > this.hero.shootTime){
+                //更新下次射击时间
+                this.hero.shootTime = time + this.hero.shootInterval;
+                //创建新子弹
+                var bulletPos = this.bulletPos[this.hero.shootType - 1];
+                for(var k=0; k < bulletPos.length; k++){
+                    var bullet = Laya.Pool.getItemByClass("Bullet", Bullet);
+                    bullet.init({"type" : "bullet1", "camp" : 0, "speed" : -4-this.hero.shootType * 5, "hp" : 1, "hitRadius" : 1, "heroType": 1});
+                    index++;
+                    bullet.pos(this.hero.x + bulletPos[k], this.hero.y - this.hero.hitRadius -10);
+                    this.bulletsBox.addChild(bullet);
+                }
+                Laya.SoundManager.playSound(MusicConf.HERO_SHOOT);
+                Laya.SoundManager.setSoundVolume(0.8, MusicConf.HERO_SHOOT);
+            }
 
             //敌机循环
             for(var i = this.roleBox.numChildren - 1; i > -1; i--){
