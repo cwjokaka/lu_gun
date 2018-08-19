@@ -128,21 +128,25 @@ var index = 0;
                     if(role.hp > 0){
                         for(var j = 0; j < this.bulletsBox.numChildren; j++){
                             var bullet = this.bulletsBox.getChildAt(j);
-                            var hitRadius = role.hitRadius;
+                            var hitRadiusX = role.hitRadius;
+                            var hitRadiusY = role.hitRadius;
                             // if(hitRadius < 20){
                             //     hitRadius = 20;
                             //     if(this.level > 10){
                             //         hitRadius = 40;
                             //     }
                             // }
-                            if(Math.abs(role.x - bullet.x) < hitRadius && Math.abs(role.y - bullet.y) < hitRadius){
+                            if(bullet.className == "Boom"){
+                                hitRadiusX = 450;
+                            }
+                            if(Math.abs(role.x - bullet.x) < hitRadiusX && Math.abs(role.y - bullet.y) < hitRadiusY){
                                 role.hitAction(bullet.att);
                                 bullet.hitAction();
                                 if(role.hp < 1 && role.type == "enemy3"){
                                     var r = Math.random();
                                     var goodType = r < 0.7 ? 2 : 3;
                                     var good = Laya.Pool.getItemByClass("Item", Item);
-                                    good.init({"type" : "ufo" + (goodType-1), "camp" : role.camp, "speed" : 1, "hp" : 4, "hitRadius" : 15, "itemType" : goodType});
+                                    good.init({"type" : "ufo" + (goodType-1), "camp" : role.camp, "speed" : 3, "hp" : 4, "hitRadius" : 15, "itemType" : goodType});
                                     good.pos(role.x, role.y);
                                     this.itemBox.addChild(good);
                                 }
@@ -157,7 +161,7 @@ var index = 0;
                             this.gameInfo.showLevel(this.level);
                             this.levelUpScore += this.level * 30;
                         }
-                        if(this.score > 20){
+                        if(this.score > 50){
                             this.boss = true;
                         }
                     }
@@ -197,11 +201,11 @@ var index = 0;
             //每隔30帧 创建新的敌机
             if(!this.boss){
                 var timeLevel = this.level > 5 ? 5 : this.level;
-                if(Laya.timer.currFrame % (100 - timeLevel * 10) === 0){
+                if(Laya.timer.currFrame % (90 - timeLevel * 10) === 0){
                     var info = {"type" : "enemy1", "camp" : 1, "speed" : 3 + this.level * 1, "hp" : this.level * 0.3, "hitRadius" : 15};
                     this.createEnemy(info);
                 }
-                if(Laya.timer.currFrame % (150 - timeLevel * 10) === 0){
+                if(Laya.timer.currFrame % (130 - timeLevel * 10) === 0){
                     var info = {"type" : "enemy2", "camp" : 1, "speed" : 2 + this.level * 0.8, "hp" : this.level * 0.5, "hitRadius" : 30};
                     this.createEnemy(info);
                 }
@@ -268,7 +272,7 @@ var index = 0;
                 this.hero.boomNum--;
                 var boom = new Boom();
                 boom.init({});
-                this.boomBox.addChild(boom);
+                this.bulletsBox.addChild(boom);
             }
         }
 

@@ -10,7 +10,7 @@ var Boom = (function(_super){
     _proto.init = function(_info){
         _super.prototype.init.call(this, _info);
         this.att = 10000;
-        this.speedY = -5;
+        this.speedY = -6;
         this.graphics.drawRect(0, 0, 400, 20, 'blue', 'yellow', 3);
         this.pos(0, 825);
     }
