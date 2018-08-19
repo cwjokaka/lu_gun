@@ -21,7 +21,7 @@ var index = 0;
             //子弹级别
             this.bulletLevel = 0;
             //boss
-            this.boss = false;
+            this.hasBoss = false;
 
             //加载图集资源
             Laya.loader.load("res/atlas/resource.atlas", Laya.Handler.create(this, this.onLoaded), null, Laya.Loader.ATLAS);
@@ -40,10 +40,12 @@ var index = 0;
             //实例化角色 容器
             this.roleBox = new Sprite();
             Laya.stage.addChild(this.roleBox);
-            //子弹容器
+            // 子弹容器
             this.bulletsBox = new Sprite();
             Laya.stage.addChild(this.bulletsBox);
-            //奖励容器
+            // 敌机子弹容器
+            this.enemyBulletsBox = new Sprite();
+            Laya.stage.addChild(this.enemyBulletsBox);
             this.itemBox = new Sprite();
             Laya.stage.addChild(this.itemBox);
             //炸弹容器
@@ -82,6 +84,25 @@ var index = 0;
                     bullet.move();
                 }
             }
+
+            // 敌机子弹循环
+            for(var j=0; j < this.enemyBulletsBox.numChildren; j++){
+                var bullet = this.enemyBulletsBox.getChildAt(j);
+                if (bullet.getBounds().intersects(this.hero.getBounds())) {
+                    this.hero.hitAction(1);
+                    bullet.removeSelf();
+                    continue;
+                }
+
+                if(bullet.y < 900){
+                    bullet.move();
+                }else{
+                    //从舞台移除
+                    bullet.removeSelf();
+                }
+            }
+
+
             //主角射击
             //获取当前时间
             var time = Laya.Browser.now();
@@ -102,12 +123,41 @@ var index = 0;
                 Laya.SoundManager.setSoundVolume(0.8, MusicConf.HERO_SHOOT);
             }
 
+            if (this.hasBoss) {
+                // console.log('23213123asda');
+                // console.log(this.boss.x, this.boss.y);
+                this.boss.dodo();
+                for(var j=0; j < this.bulletsBox.numChildren; j++){
+                    
+                    var bullet = this.bulletsBox.getChildAt(j);
+
+                    if (bullet.getBounds().intersects(this.boss.getBounds())) {
+                        var die = this.boss.hitAction(bullet.att);
+                        bullet.hitAction();
+                        bullet.removeSelf();
+                        if (die) {
+                            this.hasBoss = false;
+                            this.boss.removeSelf();
+                        }
+                        continue;
+                    }
+
+                    if(bullet.y > 0){
+                        bullet.move();
+                    }else{
+                        //从舞台移除
+                        bullet.removeSelf();
+                    }
+                }
+
+            } 
+
             //敌机循环
             for(var i = this.roleBox.numChildren - 1; i > -1; i--){
                 var role = this.roleBox.getChildAt(i);
                 if(role){
                     role.move();
-                    if(role.y > 1000 || !role.visible || this.boss){
+                    if(role.y > 1000 || !role.visible || this.hasBoss){
                         //从舞台移除
                         role.removeSelf();
                         //回收前重置属性信息
@@ -161,8 +211,13 @@ var index = 0;
                             this.gameInfo.showLevel(this.level);
                             this.levelUpScore += this.level * 30;
                         }
-                        if(this.score > 50){
-                            this.boss = true;
+
+                        if(this.score >= 1){
+                            this.hasBoss = true;
+                            this.boss = new Boss();
+                            // this.bossBox.addChild(boss);
+                            Laya.stage.addChild(this.boss);
+
                         }
                     }
                 }
@@ -199,7 +254,7 @@ var index = 0;
             }
 
             //每隔30帧 创建新的敌机
-            if(!this.boss){
+            if(!this.hasBoss){
                 var timeLevel = this.level > 5 ? 5 : this.level;
                 if(Laya.timer.currFrame % (90 - timeLevel * 10) === 0){
                     var info = {"type" : "enemy1", "camp" : 1, "speed" : 3 + this.level * 1, "hp" : this.level * 0.3, "hitRadius" : 15};
@@ -209,10 +264,10 @@ var index = 0;
                     var info = {"type" : "enemy2", "camp" : 1, "speed" : 2 + this.level * 0.8, "hp" : this.level * 0.5, "hitRadius" : 30};
                     this.createEnemy(info);
                 }
-                if(Laya.timer.currFrame % (210 - timeLevel * 10) === 0){
-                    var info = {"type" : "enemy3", "camp" : 1, "speed" : 1 + this.level * 0.5, "hp" : this.level * 3, "hitRadius" : 75};
-                    this.createEnemy(info);
-                }
+                // if(Laya.timer.currFrame % (210 - timeLevel * 10) === 0){
+                //     var info = {"type" : "enemy3", "camp" : 1, "speed" : 1 + this.level * 0.5, "hp" : this.level * 3, "hitRadius" : 75};
+                //     this.createEnemy(info);
+                // }
          }
 
             //显示

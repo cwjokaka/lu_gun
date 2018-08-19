@@ -1,3 +1,4 @@
+var gameMain;
 var HomePage = (function(_super){
     function HomePage(_gameMain){
         HomePage.super(this);
@@ -13,7 +14,7 @@ var HomePage = (function(_super){
     var _proto = HomePage.prototype;
 
     _proto.startGame = function(){
-        var gameMain = new GameMain();
+        gameMain = new GameMain();
         Laya.stage.replaceChild(gameMain, this);
     }
     return HomePage;
